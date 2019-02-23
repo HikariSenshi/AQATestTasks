@@ -2,7 +2,6 @@ package google;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,9 +13,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class GoogleTest {
 
     //this method will provide browser data for Selenide-framework
@@ -29,6 +28,14 @@ public class GoogleTest {
         };
     }
 
+    private static void waitFullLoading() {
+        Wait<WebDriver> wait = new WebDriverWait(WebDriverRunner.getWebDriver(), 7000);
+        wait.until(driver -> {
+            String exec = String
+                    .valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState"));
+            return ("complete".equals(exec));
+        });
+    }
 
     @BeforeMethod
     public void setUp(Object[] param) {
@@ -36,8 +43,8 @@ public class GoogleTest {
 
     }
 
-    @Test(dataProvider = "browsers",timeOut = 45000L)
-    public void     testSearchGoogle(@SuppressWarnings("unused") String browser) throws InterruptedException {
+    @Test(dataProvider = "browsers", timeOut = 45000L)
+    public void testSearchGoogle(@SuppressWarnings("unused") String browser) throws InterruptedException {
         //this method open google page
         Selenide.open("https://google.com");
         //send google request
@@ -52,7 +59,7 @@ public class GoogleTest {
 
     }
 
-    @Test(dataProvider = "browsers",timeOut = 35000L)
+    @Test(dataProvider = "browsers", timeOut = 35000L)
     public void testLastHourRequest(@SuppressWarnings("unused") String browser) throws InterruptedException {
         //this method open google page
         Selenide.open("https://google.com");
@@ -72,16 +79,6 @@ public class GoogleTest {
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         WebDriverRunner.closeWebDriver();
-    }
-
-
-    public static void waitFullLoading() {
-        Wait<WebDriver> wait = new WebDriverWait(WebDriverRunner.getWebDriver(), 7000);
-        wait.until(driver -> {
-            String exec = String
-                    .valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState"));
-            return ("complete".equals(exec));
-        });
     }
 }
 
