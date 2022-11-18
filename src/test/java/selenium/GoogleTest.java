@@ -1,4 +1,4 @@
-package google;
+package selenium;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
@@ -13,6 +13,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -20,7 +22,7 @@ public class GoogleTest {
 
     //this method will provide browser data for Selenide-framework
     @DataProvider(name = "browsers")
-    public static Object[] browserProvider() {
+    public static Object[][] browserProvider() {
         return new Object[][]{
                 {"chrome"},
                 {"opera"},
@@ -29,7 +31,7 @@ public class GoogleTest {
     }
 
     private static void waitFullLoading() {
-        Wait<WebDriver> wait = new WebDriverWait(WebDriverRunner.getWebDriver(), 7000);
+        Wait<WebDriver> wait = new WebDriverWait(WebDriverRunner.getWebDriver(), Duration.ofSeconds(7));
         wait.until(driver -> {
             String exec = String
                     .valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState"));
