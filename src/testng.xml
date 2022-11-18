@@ -1,13 +1,13 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="My test task">
-    <test name="google tests">
+    <test name="selenium tests">
         <classes>
-            <class name="google.GoogleTest"/>
+            <class name="selenium.GoogleTest"/>
         </classes>
     </test>
     <test name="api tests">
         <classes>
-            <class name="api.ApiTest"/>
+            <class name="api.TinyApiTests"/>
         </classes>
     </test>
 </suite>
